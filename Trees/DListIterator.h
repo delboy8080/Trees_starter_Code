@@ -23,8 +23,47 @@ public:
 	bool isValid();
 	bool isEnd();
 	bool isStart();
-};
 
+	DListIterator<T> operator++();
+	DListIterator<T> operator++(int u);
+	DListIterator<T> operator--();
+	DListIterator<T> operator--(int u);
+	T operator*();
+
+};
+template <class T>
+DListIterator<T> DListIterator<T>::operator++()
+{
+	this->currentNode = this->currentNode->next;
+	return *this;
+}
+template <class T>
+DListIterator<T> DListIterator<T>::operator++(int u)
+{
+	DListIterator temp(*this);
+	this->currentNode = this->currentNode->next;
+	return temp;
+}
+template <class T>
+DListIterator<T> DListIterator<T>::operator--()
+{
+	this->currentNode = this->currentNode->next;
+	return *this;
+	
+
+}
+template <class T>
+DListIterator<T> DListIterator<T>::operator--(int u)
+{
+	DListIterator temp(*this);
+	this->currentNode = this->currentNode->previous;
+	return temp;
+}
+template <class T>
+T DListIterator<T>::operator*()
+{
+	return this->currentNode->data;
+}
 template <class T>
 DListIterator<T>::DListIterator(DList<T> *l, DListNode<T> *n)
 {

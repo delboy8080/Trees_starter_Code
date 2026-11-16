@@ -20,7 +20,9 @@ T Tree<T>::getData()
 template <class T>
 Tree<T>::Tree(T item)
 {
-	
+	this->data = item;
+	parent = nullptr;
+	children = new DList<Tree<T>*>();
 }
 
 template <class T>

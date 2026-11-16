@@ -28,5 +28,12 @@ Tree<T>::Tree(T item)
 template <class T>
 int Tree<T>::count()
 {
-	return 0;
+	int c = 1;
+	DListIterator<Tree<T>*> iter = children->getIterator();
+	while (iter.isValid())
+	{
+		c += (*iter)->count();
+		iter++;
+	}
+	return c;
 }

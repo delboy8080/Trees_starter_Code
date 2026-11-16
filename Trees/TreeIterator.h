@@ -36,68 +36,102 @@ TreeIterator<T>::TreeIterator(Tree<T>* root)
 template <class T>
 void TreeIterator<T>::resetIterator()
 {
-	
+	if (node == nullptr)
+	{
+		childIter = nullptr;
+	}
+	else
+	{
+		childIter = node->children->getIterator();
+	}
 }
 
 template <class T>
 void TreeIterator<T>::root()
 {
-	
+	if (node->parent != nullptr)
+	{
+		node = node->parent;
+		root();
+	}
+	else
+	{
+		resetIterator();
+	}
 }
 
 template <class T>
 void TreeIterator<T>::up()
 {
-	
+	if (node->parent != nullptr)
+	{
+		node = node->parent;
+		
+	}
+	resetIterator();
 }
 
 template <class T>
 void TreeIterator<T>::down()
 {
-	
+	if (childIter.isValid())
+	{
+		node = childIter.item();
+		resetIterator();
+	}
 
 }
 
 template <class T>
 void TreeIterator<T>::childBack()
 {
-	
+	childIter--;
 }
 
 template <class T>
 void TreeIterator<T>::childForth()
 {
-	
+	childIter++;
 }
 
 template <class T>
 void TreeIterator<T>::childStart()
 {
-	
+	childIter.start();
 }
 
 template <class T>
 void TreeIterator<T>::childEnd()
 {
-	
+	childIter.end();
 }
 
 template <class T>
 void TreeIterator<T>::appendChild(T item)
 {
-	
+	Tree<T>* newTree = new Tree<T>(item);
+	newTree->parent = node;
+	node->children->append(newTree);
+	resetIterator();
+
+
 }
 
 template <class T>
 void TreeIterator<T>::prependChild(T item)
 {
-	
+	Tree<T>* newTree = new Tree<T>(item);
+	newTree->parent = node;
+	node->children->prepend(newTree);
+	resetIterator();
 }
 
 template <class T>
 void TreeIterator<T>::insertChildBefore(T item)
 {
-	
+	Tree<T>* newTree = new Tree<T>(item);
+	newTree->parent = node;
+	node->children->insert(childIter, newTree);
 		
 	
 }
@@ -105,7 +139,12 @@ void TreeIterator<T>::insertChildBefore(T item)
 template <class T>
 void TreeIterator<T>::insertChildAfter(T item)
 {
-
+	Tree<T>* newTree = new Tree<T>(item);
+	newTree->parent = node;
+	childIter++;
+	node->children->insert(childIter, newTree);
+	childIter--;
+	childIter--;
 	
 
 }
@@ -113,7 +152,7 @@ void TreeIterator<T>::insertChildAfter(T item)
 template <class T>
 void TreeIterator<T>::removeChild()
 {
-	
+	node->children->remove(childIter);
 	
 }
 
